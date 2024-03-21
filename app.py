@@ -27,8 +27,10 @@ def create_task():
 
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
+    task_list = [task.to_dict() for task in tasks]
+
     output = {
-        "tasks": [task.to_dict() for task in tasks],
+        "tasks": task_list,
         "total_tasks": len(tasks)
     }
 
