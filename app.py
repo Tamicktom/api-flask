@@ -50,7 +50,11 @@ def get_task(task_id: int):
             break
 
     if task:
-        return jsonify(task.to_dict()), 200
+        return jsonify({
+            "id": task.data.id,
+            "title": task.data.title,
+            "description": task.data.description
+            }), 200
 
     return jsonify({"message": "Task not found"}), 404
 

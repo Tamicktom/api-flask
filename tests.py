@@ -48,3 +48,33 @@ def test_get_task():
         assert 'description' in response_json
         
         assert task_id == response_json['id']
+
+def test_update_task():
+    if tasks:
+        task_id = tasks[0]
+        
+        payload = {
+          "completed": False,
+          "title": "tarefa atualizada",
+          "description": "descrição da tarefa atualizada"
+        }
+        
+        response = requests.put(f'{BASE_URL}/tasks/{task_id}', json=payload)
+        
+        assert response.status_code == 200
+
+def test_delete_task():
+    if tasks:
+        task_id = tasks[0]
+        
+        response = requests.delete(f'{BASE_URL}/tasks/{task_id}')
+        
+        assert response.status_code == 200
+        
+        tasks.remove(task_id)
+        
+        response = requests.get(f'{BASE_URL}/tasks/{task_id}')
+        
+        assert response.status_code == 404
+    else:
+        assert True
